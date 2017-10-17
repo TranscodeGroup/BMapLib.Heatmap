@@ -678,6 +678,7 @@
         this.heatmap = null;
         this.latlngs = [];
         this.bounds = null;
+        this._moveendHandler = this._moveendHandler.bind(this);
     }
 
     HeatmapOverlay.prototype.initialize = function(map) {
@@ -705,8 +706,11 @@
         this.bounds = currentBounds;
 
         var ne = this._map.pointToOverlayPixel(currentBounds.getNorthEast()),
-            sw = this._map.pointToOverlayPixel(currentBounds.getSouthWest()),
-            topY = ne.y,
+            sw = this._map.pointToOverlayPixel(currentBounds.getSouthWest());
+        if (!ne || !sw) {
+            return
+        }
+        var topY = ne.y,
             leftX = sw.x,
             h = sw.y - ne.y,
             w = ne.x - sw.x;
@@ -772,11 +776,25 @@
         return p;
     }
 
+    HeatmapOverlay.prototype._moveendHandler = function (e) {
+        this.setDataSet(this._data);
+        delete this._data;
+        this._map.removeEventListener('moveend', this._moveendHandler);
+    }
+
     HeatmapOverlay.prototype.setDataSet = function(data) {
         if (!this._map) {
             return;
         }
         var currentBounds = this._map.getBounds();
+
+        var ne = this._map.pointToOverlayPixel(currentBounds.getNorthEast()),
+            sw = this._map.pointToOverlayPixel(currentBounds.getSouthWest());
+        if (!ne || !sw) {
+            this._data = data
+            this._map.addEventListener('moveend', this._moveendHandler);
+        }
+
         var mapdata = {
             max: data.max,
             data: []
