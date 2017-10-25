@@ -807,13 +807,14 @@
 
         while (dlen--) {
             var latlng = new BMap.Point(d[dlen].lng, d[dlen].lat);
-            if (!currentBounds.containsPoint(latlng)) {
-                continue;
-            }
             this.latlngs.push({
                 latlng: latlng,
                 c: d[dlen].count
             });
+
+            if (!currentBounds.containsPoint(latlng)) {
+                continue;
+            }
 
             var divPixel = this._map.pointToOverlayPixel(latlng),
                 leftX = this._map.pointToOverlayPixel(currentBounds.getSouthWest()).x,
