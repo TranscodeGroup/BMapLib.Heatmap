@@ -672,19 +672,18 @@
         } catch (e) {
             throw Error('Baidu Map JS API is not ready yet!');
         }
-        inherits(HeatmapOverlay, BMap.Overlay, "HeatmapOverlay");
+        if (!HeatmapOverlay._isExtended) {
+            HeatmapOverlay._isExtended = true;
+            inherits(HeatmapOverlay, BMap.Overlay, "HeatmapOverlay");
+            var newHeatmap = new HeatmapOverlay(opts);
+            this.__proto__ = newHeatmap.__proto__;
+        }
         // HeatmapOverlay.prototype = new BMap.Overlay();
         this.conf = opts;
         this.heatmap = null;
         this.latlngs = [];
         this.bounds = null;
         this._moveendHandler = this._moveendHandler.bind(this);
-
-        if (!HeatmapOverlay.isExtended) {
-            HeatmapOverlay.isExtended = true;
-            var newHeatmap = new HeatmapOverlay(opts);
-            this.__proto__ = newHeatmap.__proto__;
-        }
     }
 
     HeatmapOverlay.prototype.initialize = function(map) {
