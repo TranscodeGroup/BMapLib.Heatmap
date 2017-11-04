@@ -679,6 +679,13 @@
         this.latlngs = [];
         this.bounds = null;
         this._moveendHandler = this._moveendHandler.bind(this);
+
+        if (!HeatmapOverlay.isExtended) {
+            HeatmapOverlay.isExtended = true;
+            var newHeatmap = new HeatmapOverlay(opts);
+            this.prototype = newHeatmap.prototype;
+            this.__proto__ = newHeatmap.__proto__;
+        }
     }
 
     HeatmapOverlay.prototype.initialize = function(map) {
