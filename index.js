@@ -683,7 +683,6 @@
         if (!HeatmapOverlay.isExtended) {
             HeatmapOverlay.isExtended = true;
             var newHeatmap = new HeatmapOverlay(opts);
-            this.prototype = newHeatmap.prototype;
             this.__proto__ = newHeatmap.__proto__;
         }
     }
