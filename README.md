@@ -37,3 +37,8 @@ loadBaiduMap.then(() => {
   new BMapLib.Heatmap()
 </script>
 ```
+
+## Related documents
+
+- Source: [JavaScript API v3.0 > openlibrary](https://lbsyun.baidu.com/index.php?title=jspopular3.0/openlibrary#:~:text=wiki%EF%BC%9A%E6%9F%A5%E7%9C%8BWiki-,%E7%83%AD%E5%8A%9B%E5%9B%BE,-%E6%8F%90%E4%BE%9B%E7%83%AD%E5%8A%9B%E5%9B%BE)
+- Reference: [BMapLib.HeatmapOverlay](https://api.map.baidu.com/library/Heatmap/2.0/docs/symbols/BMapLib.HeatmapOverlay.html)
