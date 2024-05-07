@@ -734,6 +734,12 @@
    */
 
   var HeatmapOverlay = function (opts) {
+    if (Reflect.getPrototypeOf(HeatmapOverlay.prototype) !== BMap.Overlay.prototype) {
+      // 保证让HeatmapOverlay继承BMap.Overlay
+      // 根据文档, 修改原型链会降低访问属性的速度, 但这种写法对代码的修改最少, 故采用
+      // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf
+      Reflect.setPrototypeOf(HeatmapOverlay.prototype, BMap.Overlay.prototype)
+    }
     this.conf = opts;
     this.conf.visible = opts.visible === undefined ? true : opts.visible;
     this.heatmap = null;
@@ -741,7 +747,7 @@
     this.bounds = null;
   }
 
-  HeatmapOverlay.prototype = new BMap.Overlay();
+  HeatmapOverlay.prototype = Object.create(typeof BMap === 'undefined' ? null : BMap.Overlay.prototype);
 
   HeatmapOverlay.prototype.initialize = function (map) {
 
