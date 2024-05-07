@@ -809,7 +809,7 @@
       this.heatmap.removeData();
 
       var len = this.latlngs.length;
-      d = {
+      const d = {
         max: this.heatmap._store.getData().max,
         data: []
       };
