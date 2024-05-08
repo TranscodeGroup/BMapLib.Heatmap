@@ -356,8 +356,8 @@
         _updateGradient: function (config) {
           this._palette = _getColorPalette(config);
         },
-        updateConfig: function (config) {
-          if (config['gradient']) {
+        updateConfig: function (config, oldConfig) {
+          if (config.gradient !== oldConfig.gradient) {
             this._updateGradient(config);
           }
           this._setStyles(config);
@@ -649,8 +649,9 @@
           return this;
         },
         configure: function (config) {
+          const oldConfig = this._config
           this._config = Util.merge(this._config, config);
-          this._renderer.updateConfig(this._config);
+          this._renderer.updateConfig(this._config, oldConfig);
           this._coordinator.emit('renderall', this._store._getInternalData());
           return this;
         },
