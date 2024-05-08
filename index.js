@@ -987,9 +987,6 @@
       if (key == "radius") {
         this.heatmap._store._cfgRadius = options[key];
       }
-      if (key == 'opacity') {
-        options[key] = options[key] / 100;
-      }
     }
     this.heatmap.configure(options);
     if (this.data) {
